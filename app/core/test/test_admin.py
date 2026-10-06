@@ -1,10 +1,10 @@
 """django admin modifications for the application"""
 
-from django.contrib import admin
 from django.test import TestCase
 from django.urls import reverse
 from django.test import Client
 from django.contrib.auth import get_user_model
+
 
 class adminSiteTests(TestCase):
     """tests for the django admin modifications"""
@@ -21,6 +21,7 @@ class adminSiteTests(TestCase):
             password='testpass123',
             name='Test User',
         )
+
     def test_users_listed(self):
         """Test that users are listed on the user page"""
         url = reverse('admin:core_user_changelist')
@@ -28,18 +29,17 @@ class adminSiteTests(TestCase):
 
         self.assertContains(res, self.user.name)
         self.assertContains(res, self.user.email)
-        
+
     def test_edit_user_page(self):
         """Test that the edit user page works"""
         url = reverse('admin:core_user_change', args=[self.user.id])
         res = self.client.get(url)
 
         self.assertEqual(res.status_code, 200)
-        
+
     def test_create_user_page(self):
         """Test that the create user page works"""
         url = reverse('admin:core_user_add')
         res = self.client.get(url)
 
         self.assertEqual(res.status_code, 200)
-        
