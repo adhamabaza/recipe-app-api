@@ -88,3 +88,7 @@ docker compose run --rm app sh -c "flake8"
 ```
 
 The same test and lint checks are configured in the GitHub Actions workflow.
+
+---
+
+*Project by Adham Abaza*
