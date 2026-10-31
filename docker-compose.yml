@@ -1,11 +1,25 @@
 services:
+  frontend:
+    build:
+      context: ./frontend
+      target: development
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/frontend
+      - frontend-node-modules:/frontend/node_modules
+    environment:
+      - API_PROXY_TARGET=http://app:8000
+    depends_on:
+      - app
+
   app:
     build: 
       context: .
       args:
         - DEV=true
     ports:
-      - "8000:8000"
+      - "${API_PORT:-8000}:8000"
     volumes:
       - ./app:/app
       - dev-static-data:/vol/web
@@ -17,6 +31,7 @@ services:
       - DB_USER=devuser
       - DB_PASSWORD=changeme
       - DEBUG=1
+      - ALLOWED_HOSTS=localhost,127.0.0.1,[::1],app
     depends_on:
       - db
 
@@ -31,6 +46,7 @@ services:
       - POSTGRES_PASSWORD=changeme
   
 volumes:
+  frontend-node-modules:
   dev-db-data:
   dev-static-data:
 

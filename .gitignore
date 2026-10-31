@@ -216,3 +216,21 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+node_modules/
+.npm-cache/
+.vercel/
+.venv-hosting/
+app/staticfiles/
+app/.env.vercel.local
+!frontend/.env.example
+!app/.env.vercel.example
+frontend/dist/
+frontend/.env*
+!frontend/.env.example
+frontend/test-results/
+frontend/playwright-report/
+.vercel
+.env*
+!frontend/.env.example
+!app/.env.vercel.example

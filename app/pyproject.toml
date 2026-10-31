@@ -1,0 +1,16 @@
+[project]
+name = "recipe-book-api"
+version = "1.0.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "Django==5.2.18",
+    "djangorestframework==3.16.1",
+    "drf-spectacular==0.29.0",
+    "psycopg2-binary==2.9.13",
+    "Pillow==12.3.0",
+    "dj-database-url==3.1.2",
+    "vercel==0.12.1",
+]
+
+[tool.vercel]
+entrypoint = "app.wsgi:application"

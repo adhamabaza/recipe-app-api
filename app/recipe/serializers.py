@@ -1,5 +1,6 @@
 """Serializers for recipe APIs."""
 from rest_framework import serializers
+from django.conf import settings
 from core.models import Recipe, Tag, Ingredient
 
 
@@ -103,3 +104,11 @@ class RecipeImageSerializer(serializers.ModelSerializer):
         fields = ['id', 'image']
         read_only_fields = ['id']
         extra_kwargs = {'image' : {'required' : True}}
+
+    def validate_image(self, image):
+        limit = getattr(settings, 'MAX_RECIPE_IMAGE_BYTES', None)
+        if limit and image.size > limit:
+            raise serializers.ValidationError(
+                f'Images must be no larger than {limit // (1024 * 1024)} MB.'
+            )
+        return image
