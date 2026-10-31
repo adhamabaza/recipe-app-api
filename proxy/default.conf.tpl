@@ -6,10 +6,16 @@ server {
         alias /vol/static;
     }
 
-    location / {
+    location ~ ^/(api|admin)(/|$) {
         set $app_upstream ${APP_HOST}:${APP_PORT};
         uwsgi_pass            $app_upstream;
         include               /etc/nginx/uwsgi_params;
         client_max_body_size  10M;
+    }
+
+    location / {
+        set $frontend_upstream frontend:8080;
+        proxy_pass http://$frontend_upstream;
+        proxy_set_header Host $host;
     }
 }

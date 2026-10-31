@@ -1,4 +1,10 @@
 services:
+  frontend:
+    build:
+      context: ./frontend
+      target: production
+    restart: always
+
   app:
     build:
       context: .
@@ -47,6 +53,8 @@ services:
     volumes:
       - static-data:/vol/static
     depends_on:
+      frontend:
+        condition: service_started
       app:
         condition: service_healthy
 
